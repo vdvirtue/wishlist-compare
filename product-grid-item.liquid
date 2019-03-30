@@ -1,0 +1,71 @@
+<!-- /snippets/product-card.liquid -->
+<div class="product-card">
+  {% assign image = product.featured_image %}
+  <div class="product-card__image-container">
+    <div class="product-card__image-wrapper">
+      <div class="product-card__image js" style="max-width: {% include 'image-width' with image: image, width: 235 %}px;" data-image-id="{{ image.id }}">
+        {% assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' %}
+        <img class="lazyload"
+             src="{{image | img_url:'1x1'}}"
+             data-src="{{ img_url }}"
+             data-widths="[100, 140, 180, 250, 305, 440, 610, 720, 930, 1080]"
+             data-aspectratio="{{ image.aspect_ratio }}"
+             data-sizes="auto"
+             data-parent-fit="contain"
+             alt="{{ image.alt | escape }}">
+      </div>
+    </div>
+  </div>
+  <div class="product-card__info">
+    {% if settings.product_vendor_enable %}
+    <div class="product-card__brand">{{ product.vendor }}</div>
+    {% endif %}
+
+    <div class="product-card__name">{{ product.title }}</div>
+
+    {% if product.available %}
+    <div class="product-card__price">
+      {% if product.compare_at_price > product.price %}
+      {% if product.price_varies %}
+      {% assign sale_price = product.price | money %}
+      {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+      {% else %}
+      <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+      <s class="product-card__regular-price">{{ product.compare_at_price | money }}</s>
+
+      <span class="visually-hidden">{{ 'products.product.sale_price' | t }}</span>
+      {{ product.price | money }}
+      {% endif %}
+
+      {% else %}
+      {% if product.price_varies %}
+      {% assign price = product.price | money %}
+      {{ 'products.product.from_text_html' | t: price: price }}
+      {% else %}
+      <span class="visually-hidden">{{ 'products.product.regular_price' | t }}</span>
+      {{ product.price | money }}
+      {% endif %}
+
+      {% endif %}
+    </div>
+    {% else %}
+    <div class="product-card__availability">
+      {{ 'products.product.sold_out' | t }}
+    </div>
+    {% endif %}
+  </div>
+
+  {% if product.compare_at_price > product.price %}
+  <div class="product-tag product-tag--absolute" aria-hidden="true">
+    {{ 'products.product.on_sale' | t }}
+  </div>
+  {% endif %}
+  <div class="product-card__overlay">
+    <a href="{{ product.url | within: collection }}" class="btn product-card__overlay-btn btn--narrow">
+      {{ 'products.product.view' | t }}
+    </a>
+    <span class="btn product-card__overlay-btn btn--narrow js-btn-quickview" data-toggle="modal" data-target="#jsQuickview" data-handle="{{product.handle}}">Quickview</span>
+    <span class="btn product-card__overlay-btn btn--narrow js-btn-wishlist" data-handle="{{product.handle}}">{{ 'products.product.wishlist_text' }}</span>
+    <span class="btn product-card__overlay-btn btn--narrow js-btn-compare" data-handle="{{product.handle}}">{{ 'products.product.compare_text' }}</span>
+  </div>
+</div>

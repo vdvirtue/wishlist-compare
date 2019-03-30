@@ -1,0 +1,117 @@
+
+/*================ Notification bar ================*/
+.notification {
+  visibility: hidden;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  opacity: 0;
+  transition: top 0.25s, visibility 0.25s, opacity 0.15s;
+  transition-timing-function: cubic-bezier(0.33, 0.59, 0.14, 1);
+  z-index: $z-index-notification;
+}
+
+.notification--promo {
+  position: static;
+  display: none;
+}
+
+.notification--active {
+  display: block;
+  visibility: visible;
+/*   top: 100%; */
+  opacity: 1;
+}
+
+.notification__link {
+  display: block;
+  padding: ($gutter-site / 2) 0;
+
+  .notification-adapt & {
+    padding: 0;
+  }
+
+  &:hover u {
+    text-decoration: none;
+  }
+}
+
+.notification__inner {
+  position: relative;
+  overflow: visible;
+  padding: ($gutter-site / 2) 0;
+
+  .notification-adapt & {
+    padding: 0;
+  }
+}
+
+.notification__inner--has-link {
+  padding: 0;
+}
+
+.notification__message {
+  display: block;
+  padding: 0 ($gutter-site * 3);
+  text-align: center;
+  font-weight: $font-weight-body-bold;
+
+  .notification-adapt & {
+    background-color: $color-accent;
+    padding: 10px ($gutter-site * 3);
+  }
+
+  span {
+    text-decoration: underline;
+    white-space: nowrap;
+  }
+}
+
+.notification--success,
+.notification--promo {
+  background-color: #28a745;
+  color: white;
+  a {
+    color: white;
+  }
+}
+
+.notification--success.notification-adapt,
+.notification--promo.notification-adapt {
+  background-color: transparent;
+}
+
+.notification--error {
+  color: $color-error-input-text;
+  a {
+    color: $color-error-input-text;
+  }
+}
+.notification--wishlist,.notification--compare{
+  background-color:#28a745;
+}
+.notification--max{
+  background-color:#dc3545;
+}
+
+.notification__close {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  @include rtl-right($gutter-site);
+  padding: 0 ($gutter-site / 2);
+  color: inherit;
+
+  .icon {
+    fill: currentColor;
+  }
+}
+
+.js-compare-content{
+  text-align:center;
+  .compare-item{
+    &+.compare-item{
+      @include rtl-border-left(1px solid #dee2e6);
+    }
+  }
+}

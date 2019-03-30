@@ -1,0 +1,7 @@
+{% if settings.enable_compare %}
+<a href="javascript:void(0)" data-toggle="modal" data-target="#jsCompare" class="site-header__link site-header__compare js-open-compare">
+  {% include 'icon-exchange' %}
+  <span class="icon__fallback-text">{{ 'products.product.compare_text' }}</span>
+  <span class="js-compare-count text-center"></span>
+</a>
+{% endif %}
